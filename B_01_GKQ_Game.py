@@ -68,7 +68,7 @@ def int_check(prompt, low=None, high=None):
                 elif high is not None:
                     print(f"Please enter an integer less than or equal to {high}.")
         except ValueError:
-            print("Please enter an integer.")
+            print("Please enter an integer greater than or equal to 1.")
 
 
 def string_checker(prompt):
@@ -169,6 +169,46 @@ questions = {
         "answer": "1066"
     }
 }
+# GAME TITTLE
+print()
+print("🎭🎭🎭 Welcome to the General Knowledge Quiz! 🎭🎭🎭")
+print()
+# Display instructions
+want_instructions = yes_no("Do you want to read the instructions? ")
+if want_instructions == "yes" or want_instructions == "y":
+    print('''
+📝 Quiz Instructions:
+
+Welcome to the General Knowledge Quiz!
+
+🔹 How to Play:
+You'll be asked a series of questions, each with three options.
+Enter the number corresponding to your chosen answer.
+Earn 1 point for each correct answer.
+If you answer incorrectly, you'll lose a point.
+
+🔹 Customization:
+You can customize the number of rounds and questions per round.
+Simply enter the total number of rounds and the number of questions per round when prompted.
+
+🔹 Game Statistics:
+At the end of each round, you'll see statistics including:
+Questions answered correctly.
+Questions answered incorrectly.
+Highest and lowest scores for a round.
+
+🔹 Restarting the Quiz:
+If you'd like to play again, simply choose to restart the quiz when prompted.
+Otherwise, you can exit the game.
+
+🔹 Enjoy and Have Fun!
+Let's begin and test your general knowledge!
+        ''')
+
+elif want_instructions == "no" or want_instructions == "n":
+    print()
+else:
+    print("Please enter yes / no")
 
 while True:  # Start of the main loop for restarting the quiz
     # Initialize game variables
@@ -179,31 +219,9 @@ while True:  # Start of the main loop for restarting the quiz
     questions_answered = 0
     questions_correct = 0
 
-    print()
-    print("🎭🎭🎭 Welcome to the General Knowledge Quiz! 🎭🎭🎭")
-    print()
-
     # Game parameter customization
     total_rounds = int_check("Enter the total number of rounds (default is 1): ", 1)
     num_questions_per_round = int_check("Enter the number of questions per round (default is 3): ", 1)
-
-    # Display instructions
-    want_instructions = yes_no("Do you want to read the instructions? ")
-    if want_instructions == "yes" or want_instructions == "y":
-        print('''
-        ⭐⭐⭐⭐ Instructions ⭐⭐⭐⭐
-
-        In this quiz, you will be asked a series of questions,
-        each with three options. Enter the number corresponding to your answer.
-
-        You will earn 1 point for each correct answer.
-
-        Let's begin! ''')
-
-    elif want_instructions == "no" or want_instructions == "n":
-        print()
-    else:
-        print("Please enter yes / no")
 
     # Game loop starts here
     for round_count in range(1, total_rounds + 1):
@@ -241,6 +259,7 @@ while True:  # Start of the main loop for restarting the quiz
         # If there are no more questions left
         if not questions:
             print("😲😲😲 Oh no! There are no more questions! 😲😲😲")
+            break
 
     # Calculate statistics
     questions_incorrect = questions_answered - questions_correct
@@ -249,9 +268,9 @@ while True:  # Start of the main loop for restarting the quiz
 
     # Output game statistics
     print("\n📊📊📊 Game Statistics 📊📊📊")
-    print(f"👍 Questions Correct: {questions_correct}/{questions_answered} ({percent_correct:.2f}%) \t"
+    print(f"👍 Questions Correct: {questions_correct}/{questions_answered} ({percent_correct:.2f}%) \t |    "
           f"😥 Questions Incorrect: {questions_incorrect}/{questions_answered} ({percent_incorrect:.2f}%)")
-    print(f"Highest Score For A Round: {highest_score}\t"
+    print(f"Highest Score For A Round: {highest_score}\t |    "
           f"Lowest Score For A Round: {lowest_score}\t")
 
     # Ask if the user wants to restart
