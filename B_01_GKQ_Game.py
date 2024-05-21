@@ -169,7 +169,7 @@ questions = {
         "answer": "1066"
     }
 }
-# GAME TITTLE
+# QUIZ TITTLE
 print()
 print("🎭🎭🎭 Welcome to the General Knowledge Quiz! 🎭🎭🎭")
 print()
@@ -188,18 +188,18 @@ Earn 1 point for each correct answer.
 If you answer incorrectly, you'll lose a point.
 
 🔹 Customization:
-You can customize the number of rounds and questions per round.
-Simply enter the total number of rounds and the number of questions per round when prompted.
+You can customize the number of Segments and questions per Segment.
+Simply enter the total number of Segments and the number of questions per Segment when prompted.
 
-🔹 Game Statistics:
-At the end of each round, you'll see statistics including:
+🔹 Quiz Statistics:
+At the end of each Segment, you'll see statistics including:
 Questions answered correctly.
 Questions answered incorrectly.
-Highest and lowest scores for a round.
+Highest and lowest points for a Segment.
 
 🔹 Restarting the Quiz:
-If you'd like to play again, simply choose to restart the quiz when prompted.
-Otherwise, you can exit the game.
+If you'd like to play again, simply choose to close and restart the quiz.
+Otherwise, you can exit the quiz.
 
 🔹 Enjoy and Have Fun!
 Let's begin and test your general knowledge!
@@ -207,74 +207,69 @@ Let's begin and test your general knowledge!
 
 elif want_instructions == "no" or want_instructions == "n":
     print()
-else:
-    print("Please enter yes / no")
 
-while True:  # Start of the main loop for restarting the quiz
-    # Initialize game variables
-    points = 0
-    highest_score = float('-inf')
-    lowest_score = float('inf')
-    game_history = []
-    questions_answered = 0
-    questions_correct = 0
+# Start of the quiz
+# Initialize quiz variables
+points = 0
+highest_points = float('-inf')
+lowest_points = float('inf')
+quiz_history = []
+questions_answered = 0
+questions_correct = 0
 
-    # Game parameter customization
-    total_rounds = int_check("Enter the total number of rounds (default is 1): ", 1)
-    num_questions_per_round = int_check("Enter the number of questions per round (default is 3): ", 1)
+# Quiz parameter customization
+total_segments = int_check("Enter the total number of segments (default is 1): ", 1)
+num_questions_per_segment = int_check("Enter the number of questions per segment (default is 3): ", 1)
 
-    # Game loop starts here
-    for round_count in range(1, total_rounds + 1):
-        print(f"\n💿💿💿 Round {round_count} 💿💿💿")
-        round_points = 0  # Store points earned in each round
-        round_questions_answered = 0  # Track the number of questions answered in this round
-        round_questions_correct = 0  # Track the number of questions answered correctly in this round
-        for _ in range(num_questions_per_round):
-            if not questions:  # Check if all questions have been asked
-                break
-            # Generate a question
-            question_name, options, answer = generate_question()
-
-            # Ask the user the question
-            points = ask_question(questions[question_name]["question"], options, answer)
-
-            # Update statistics for this round
-            round_points += points
-            round_questions_answered += 1
-            if points == 1:
-                round_questions_correct += 1
-
-            # Remove the asked question from the dictionary
-            del questions[question_name]
-
-        # Update overall statistics
-        points += round_points
-        questions_answered += round_questions_answered
-        questions_correct += round_questions_correct
-
-        # Update highest and lowest scores
-        lowest_score = min(lowest_score, round_points)
-        highest_score = max(highest_score, round_points)
-
-        # If there are no more questions left
-        if not questions:
-            print("😲😲😲 Oh no! There are no more questions! 😲😲😲")
+# Quiz loop starts here
+for segment_count in range(1, total_segments + 1):
+    print(f"\n💿💿💿 Segment {segment_count} 💿💿💿")
+    segment_points = 0  # Store points earned in each Segment
+    segment_questions_answered = 0  # Track the number of questions answered in this segment
+    segment_questions_correct = 0  # Track the number of questions answered correctly in this segment
+    for _ in range(num_questions_per_segment):
+        if not questions:  # Check if all questions have been asked
             break
+        # Generate a question
+        question_name, options, answer = generate_question()
 
-    # Calculate statistics
-    questions_incorrect = questions_answered - questions_correct
-    percent_correct = questions_correct / questions_answered * 100 if questions_answered > 0 else 0
-    percent_incorrect = questions_incorrect / questions_answered * 100 if questions_answered > 0 else 0
+        # Ask the user the question
+        points = ask_question(questions[question_name]["question"], options, answer)
 
-    # Output game statistics
-    print("\n📊📊📊 Game Statistics 📊📊📊")
-    print(f"👍 Questions Correct: {questions_correct}/{questions_answered} ({percent_correct:.2f}%) \t |    "
-          f"😥 Questions Incorrect: {questions_incorrect}/{questions_answered} ({percent_incorrect:.2f}%)")
-    print(f"Highest Score For A Round: {highest_score}\t |    "
-          f"Lowest Score For A Round: {lowest_score}\t")
+        # Update statistics for this segment
+        segment_points += points
+        segment_questions_answered += 1
+        if points == 1:
+            segment_questions_correct += 1
 
-    # Ask if the user wants to restart
-    restart = yes_no("\nDo you want to restart the quiz? ")
-    if restart == "no" or restart == "n":
-        print("💕💕💕 Thank you for playing! Goodbye! 💕💕💕")
-        break  # End the main loop and exit the program
+        # Remove the asked question from the dictionary
+        del questions[question_name]
+
+    # Update overall statistics
+    points += segment_points
+    questions_answered += segment_questions_answered
+    questions_correct += segment_questions_correct
+
+    # Update highest and lowest points
+    lowest_points = min(lowest_points, segment_points)
+    highest_points = max(highest_points, segment_points)
+
+    # If there are no more questions left
+    if not questions:
+        print("😲😲😲 Oh no! There are no more questions! 😲😲😲")
+        break
+
+# Calculate statistics
+questions_incorrect = questions_answered - questions_correct
+percent_correct = questions_correct / questions_answered * 100 if questions_answered > 0 else 0
+percent_incorrect = questions_incorrect / questions_answered * 100 if questions_answered > 0 else 0
+
+# Output Quiz statistics
+print("\n📊📊📊 Quiz Statistics 📊📊📊")
+print(f"👍 Questions Correct: {questions_correct}/{questions_answered} ({percent_correct:.2f}%) \t |    "
+      f"😥 Questions Incorrect: {questions_incorrect}/{questions_answered} ({percent_incorrect:.2f}%)")
+print(f"Highest Points For A Segment: {highest_points}\t |    "
+      f"Lowest Points For A Segment: {lowest_points}\t")
+
+print("💕💕💕 Thank you for playing! Goodbye! 💕💕💕")
+# End exit the program
